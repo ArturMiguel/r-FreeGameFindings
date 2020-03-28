@@ -3,17 +3,16 @@ const Discord = require('discord.js')
 const scraper = require('./scraper')
 const moment = require('moment')
 
-moment.locale('pt-br')
-
 const bot = new Discord.Client()
 
 bot.on('ready', () => {
     console.log('Bot started!')
+    moment.locale('pt-br')
     setInterval(async () => {
         const posts = await scraper()
         for (const key in posts) sendMessage(posts[key])
         console.log(`${Object.keys(posts).length} new posts (${moment().format('DD/MM/YYYY [-] HH:mm:ss')}).`)
-    }, 1000 * 60 * 60)
+    }, process.env.INTERVAL)
 })
 
 function sendMessage(post) {
