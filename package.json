@@ -1,7 +1,7 @@
 {
     "name": "reddit-scraper",
     "version": "1.0.0",
-    "description": "Web scraper/Discord bot to post free game updates.",
+    "description": "Reddit scraper/Discord bot to post free game updates.",
     "main": "./src/bot.js",
     "scripts": {
         "start": "node .",
