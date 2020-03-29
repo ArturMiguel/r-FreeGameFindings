@@ -4,9 +4,9 @@ Bot that checks free game posts published on Reddit and sends them to Discord.
 
 *This project is for personal use. All information collected has their respective links and authors mentioned.
 
-## How it work?
+## How does it work?
 
-The bot scrapes [r/FreeGamesOnSteam](https://www.reddit.com/r/FreeGamesOnSteam/) and collects all recent posts. After collecting the posts, the bot removes the invalid posts (not free games or already been sent) and sends the new posts to Discord. The `id` of the last post is saved locally in `./src/recent-post.json` for comparisons.
+The bot scrapes [r/FreeGameFindings](https://www.reddit.com/r/FreeGameFindings/) and collects all recent posts. After collecting the posts, the bot removes the invalid posts (not free games or already been sent) and sends the new posts to Discord. The `id` of the last post sent is stored locally in `./src/recent-post.json` for comparisons.
 
 ## Requirements
 - [Node.js](https://nodejs.org/en/)
