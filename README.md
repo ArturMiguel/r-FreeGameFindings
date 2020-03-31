@@ -12,11 +12,7 @@ The bot scrapes [r/FreeGameFindings](https://www.reddit.com/r/FreeGameFindings/)
 - [Node.js](https://nodejs.org/en/)
 - [Discord app/bot](https://discordapp.com/developers/applications)
 
-## Installation
-
-1) Install project packages: `npm install`
-
-2) Create an `.env` file at the root of the project:
+## Environment
 
 ```
 # .env
@@ -26,5 +22,3 @@ GUILD_ID = <your_server_id>
 CHANNEL_ID = <post_channel_id>
 INTERVAL = <check_interval_in_milliseconds>
 ```
-
-3) Use `node .` to start the bot.

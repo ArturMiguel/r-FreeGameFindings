@@ -8,7 +8,7 @@ if (!fs.existsSync(path)) fs.writeFileSync(path, '{ "id": "" }')
 module.exports = async () => {
     const recentPost = JSON.parse(fs.readFileSync(path, 'utf8'))
     const options = {
-        uri: 'https://www.reddit.com/r/FreeGameFindings/',
+        uri: 'https://www.reddit.com/r/FreeGameFindings/new/',
         transform: (body) => {
             return cheerio.load(body)
         }
