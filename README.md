@@ -14,7 +14,7 @@ The bot scrapes [r/FreeGameFindings](https://www.reddit.com/r/FreeGameFindings/)
 
 ## Requirements
 - [Node.js](https://nodejs.org/en/) v12.x.x
-- [Discord Webhook](https://support.discord.com/hc/pt-br/articles/228383668?page=1#comment_115000025072)
+- [Discord Webhook](https://support.discord.com/hc/en-us/articles/228383668?page=1#comment_115000025072)
 
 ## Run the project
 
