@@ -1,14 +1,20 @@
 {
     "name": "reddit-scraper",
     "version": "1.0.0",
-    "description": "Discord Webhook to post free games announcements.",
+    "description": "Scraper that collects free games posts published on Reddit and sends them to Discord",
     "main": "./src/index.js",
     "scripts": {
         "start": "node ."
     },
+    "keywords": [
+        "webscraping",
+        "reddit",
+        "discord",
+        "webhook"
+    ],
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/ArturMiguel/reddit-scraper.git"
+        "url": "git+https://github.com/ArturMiguel/r-FreeGameFindings.git"
     },
     "author": "Artur Miguel",
     "license": "MIT",
@@ -19,7 +25,7 @@
         "moment-timezone": "^0.5.28"
     },
     "bugs": {
-        "url": "https://github.com/ArturMiguel/reddit-scraper/issues"
+        "url": "https://github.com/ArturMiguel/r-FreeGameFindings/issues"
     },
-    "homepage": "https://github.com/ArturMiguel/reddit-scraper#readme"
-}
+    "homepage": "https://github.com/ArturMiguel/r-FreeGameFindingsr#readme"
+} 
