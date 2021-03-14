@@ -13,7 +13,7 @@ setInterval(async () => {
 
     for (const key in posts) {
         embeds.push({
-            title: posts[key].flair.length > 0 ? `(${posts[key].flair[0].text}) ${posts[key].title}` : posts[key].title,
+            title: posts[key].title,
             url: posts[key].permalink,
             description: `Página do jogo: [${posts[key].source.displayText}](${posts[key].source.url})`,
             image: {

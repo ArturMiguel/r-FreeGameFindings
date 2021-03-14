@@ -1,31 +1,32 @@
-# Reddit scraper - r/FreeGameFindings 
+<div style='text-align: center'>
+<h3>
+<h1> r/FreeGameFindings </h1>
+  <a href='./README.md'>English</a> •
+  <a href='./README.pt-br.md'>Português (Brasil)</a>
+</h3> 
+</div>
 
-Scraper that collects free games posts published on Reddit and sends them to Discord.
+<hr>
 
-*This project is for personal use. All information collected has their respective links and authors mentioned.
+Web scraper that collects free games posts published on Reddit and sends them to Discord. All information collected has their respective links and authors mentioned.
 
 ## How does it work?
 
-The bot scrapes [r/FreeGameFindings](https://www.reddit.com/r/FreeGameFindings/) and collects all recent posts. After collecting the posts, the bot removes the invalid posts (not free games or already been sent) and sends the new posts to Discord.
+The bot scrapes the subreddit [r/FreeGameFindings](https://www.reddit.com/r/FreeGameFindings/) and collects recent publications. After collection, the bot removes those that are ads, that have no origin or that have already been sent. At the end, the publications are sent to discord through the webhook.
 
-> Example image in portuguese (pt-BR).
+<img src='./assets/preview.png' alt='image not found'>
 
-<img src='./assets/webhook.png' alt='image not found'>
+## Installation
 
-## Requirements
-- [Node.js](https://nodejs.org/en/) v12.x.x
-- [Discord Webhook](https://support.discord.com/hc/en-us/articles/228383668?page=1#comment_115000025072)
-
-## Run the project
-
-1) Fork and clone the project.
-2) Install the dependencies: `npm install`.
+1) Clone the project.
+2) Install the dependencies: 
+```
+npm install
+```
 3) Create a file called `.env` at the project root and put the variables values:
 ```
-# .env template
-
-WEBHOOK=
-INTERVAL=
+WEBHOOK= # Discord webhook URL
+INTERVAL= # Interval in ms
 ```
 4) Type `node .` to start the application.
 
