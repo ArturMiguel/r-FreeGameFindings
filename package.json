@@ -22,7 +22,7 @@
         "axios": "^0.19.2",
         "cheerio": "^1.0.0-rc.3",
         "dotenv": "^8.2.0",
-        "moment-timezone": "^0.5.28"
+        "moment-timezone": "^0.5.35"
     },
     "bugs": {
         "url": "https://github.com/ArturMiguel/r-FreeGameFindings/issues"
