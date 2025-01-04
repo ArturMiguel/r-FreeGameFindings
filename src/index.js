@@ -1,34 +1,51 @@
-require('dotenv').config()
-const scraper = require('./scraper')
-const moment = require('moment-timezone')
-const axios = require('axios')
+require("dotenv").config();
+const scraper = require("./scraper");
+const momentTz = require("moment-timezone");
+const axios = require("axios");
 
-const startDate = moment()
+console.log("Bot started!");
 
-console.log('Bot started!')
+let lastDate = null;
 
 setInterval(async () => {
-    const posts = await scraper(startDate)
-    const embeds = []
+  let postList = await scraper();
 
-    for (const key in posts) {
-        embeds.push({
-            title: posts[key].title,
-            url: posts[key].permalink,
-            description: `Página do jogo: [${posts[key].source.displayText}](${posts[key].source.url})`,
-            image: {
-                url: posts[key].preview ? posts[key].preview.url : ''
-            },
-            footer: {
-                text: `Postado por "${posts[key].author}" em ${moment(posts[key].created).tz('America/Sao_Paulo').format('DD/MM/YYYY [às] HH:mm:ss')}`
-            }
-        })
+  if (lastDate) {
+    postList = postList.filter(post => momentTz(post.created_at).isAfter(lastDate));
+  }
+
+  const embedList = postList.map(post => {
+    return {
+      id: post.id,
+      description: `[${post.content.domain}](${post.content.url})`,
+      author: {
+        icon_url: post.author.avatar,
+        name: post.author.name,
+        url: post.author.url
+      },
+      title: post.title,
+      url: post.url,
+      thumbnail: {
+        url: post.content.image
+      },
+      footer: {
+        text: `Postado em ${momentTz(post.created_at).tz("America/Sao_Paulo").format("DD/MM/YYYY [às] HH:mm:ss")}`
+      },
     }
-    
-    if (embeds.length > 0) {
-        await axios.post(process.env.WEBHOOK, {
-            embeds: embeds
-        })
-    }
-    console.log(`${Object.keys(posts).length} new post(s).`)
-}, process.env.INTERVAL)
+  })
+  
+  console.log(`${postList.length} post(s)`);
+
+  if (embedList.length) {
+    await axios.post(process.env.WEBHOOK, {
+      content: "",
+      tts: false,
+      embeds: embedList
+    }).catch(error => {
+      console.log(`Status ${error.status}. Error: ${error.response.data}`)
+    })
+
+    lastDate = postList[0].created_at;
+  }
+
+}, process.env.INTERVAL);

@@ -29,7 +29,3 @@ WEBHOOK= # URL do Webhook do Discord
 INTERVAL= # Intervalo em milissegundos
 ```
 4) Digite `node .` para iniciar a aplicação.
-
-5) (opcional) Você pode hospedar em alguma dessas plataformas gratuitamente:
-- Heroku: https://www.heroku.com/home
-- Glitch: https://glitch.com/

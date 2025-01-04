@@ -29,7 +29,3 @@ WEBHOOK= # Discord webhook URL
 INTERVAL= # Interval in ms
 ```
 4) Type `node .` to start the application.
-
-5) (optional) You can host on some of these platforms for free: 
-- Heroku: https://www.heroku.com/home
-- Glitch: https://glitch.com/

@@ -1,31 +1,31 @@
 {
-    "name": "reddit-scraper",
-    "version": "1.0.0",
-    "description": "Scraper that collects free games posts published on Reddit and sends them to Discord",
-    "main": "./src/index.js",
-    "scripts": {
-        "start": "node ."
-    },
-    "keywords": [
-        "webscraping",
-        "reddit",
-        "discord",
-        "webhook"
-    ],
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/ArturMiguel/r-FreeGameFindings.git"
-    },
-    "author": "Artur Miguel",
-    "license": "MIT",
-    "dependencies": {
-        "axios": "^0.19.2",
-        "cheerio": "^1.0.0-rc.3",
-        "dotenv": "^8.2.0",
-        "moment-timezone": "^0.5.28"
-    },
-    "bugs": {
-        "url": "https://github.com/ArturMiguel/r-FreeGameFindings/issues"
-    },
-    "homepage": "https://github.com/ArturMiguel/r-FreeGameFindingsr#readme"
-} 
+  "name": "reddit-scraper",
+  "version": "1.0.0",
+  "description": "Scraper that collects free games posts published on Reddit and sends them to Discord",
+  "main": "./src/index.js",
+  "scripts": {
+    "start": "node ."
+  },
+  "keywords": [
+    "webscraping",
+    "reddit",
+    "discord",
+    "webhook"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ArturMiguel/r-FreeGameFindings.git"
+  },
+  "author": "Artur Miguel",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^0.19.2",
+    "cheerio": "^1.0.0-rc.3",
+    "dotenv": "^8.2.0",
+    "moment-timezone": "^0.5.28"
+  },
+  "bugs": {
+    "url": "https://github.com/ArturMiguel/r-FreeGameFindings/issues"
+  },
+  "homepage": "https://github.com/ArturMiguel/r-FreeGameFindingsr#readme"
+}
