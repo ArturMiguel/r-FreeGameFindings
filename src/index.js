@@ -3,8 +3,6 @@ const scraper = require("./scraper");
 const momentTz = require("moment-timezone");
 const axios = require("axios");
 
-console.log("Bot started!");
-
 let lastDate = null;
 
 setInterval(async () => {
@@ -17,7 +15,7 @@ setInterval(async () => {
   const embedList = postList.map(post => {
     return {
       id: post.id,
-      description: `[${post.content.domain}](${post.content.url})`,
+      description: `Página do jogo: [${post.content.domain}](${post.content.url})`,
       author: {
         icon_url: post.author.avatar,
         name: post.author.name,

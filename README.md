@@ -8,24 +8,23 @@
 
 <hr>
 
-Web scraper that collects free games posts published on Reddit and sends them to Discord. All information collected has their respective links and authors mentioned.
-
-## How does it work?
-
-The bot scrapes the subreddit [r/FreeGameFindings](https://www.reddit.com/r/FreeGameFindings/) and collects recent publications. After collection, the bot removes those that are ads, that have no origin or that have already been sent. At the end, the publications are sent to discord through the webhook.
+Web scraper that collects free games posts published on Reddit [r/FreeGameFindings](https://www.reddit.com/r/FreeGameFindings/) and sends them to Discord webhook.
 
 <img src='./assets/preview.png' alt='image not found'>
 
 ## Installation
 
-1) Clone the project.
+1) Clone this project.
+```
+git clone https://github.com/ArturMiguel/r-FreeGameFindings
+```
 2) Install the dependencies: 
 ```
-npm install
+npm ci
 ```
 3) Create a file called `.env` at the project root and put the variables values:
 ```
 WEBHOOK= # Discord webhook URL
 INTERVAL= # Interval in ms
 ```
-4) Type `node .` to start the application.
+4) Type `npm run start` to start the application.
