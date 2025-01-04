@@ -1,23 +1,35 @@
-const axios = require('axios')
-const cheerio = require('cheerio')
-const moment = require('moment-timezone')
+const axios = require("axios");
+const cheerio = require("cheerio");
 
-const uri = 'https://www.reddit.com/r/FreeGameFindings/new/'
-let lastPostDate = ''
+module.exports = async () => {
+  const response = await axios.get("https://www.reddit.com/r/FreeGameFindings/new")
+  const $ = cheerio.load(response.data)
 
-module.exports = async (startDate) => {
-    const response = await axios.get(uri)
-    const $ = cheerio.load(response.data)
-    const script = $('script[id="data"]').get()[0].children[0].data
-    const data = JSON.parse(script.substring(14).replace(/;/g, ''))
-    const posts = data.posts.models
-    
-    for (const key in posts) {
-        if (posts[key].isSponsored || !posts[key].source || startDate > moment(posts[key].created) || posts[key].created <= lastPostDate) delete posts[key]
-    }
+  const postList = [];
 
-    const keys = Object.keys(posts)
-    if (keys.length > 0) lastPostDate = posts[keys[0]].created
+  $("shreddit-post").each((_, post) => {
+    const { attribs } = post;
+    const img = $(post).find("div[slot='thumbnail'] > a > img").get(0);
+    const createdAt = $(post).find("span[slot='credit-bar'] faceplate-timeago").get(0).attribs["ts"];
 
-    return posts
+    postList.push({
+      id: attribs["id"],
+      title: attribs["post-title"],
+      url: `https://www.reddit.com${attribs["permalink"]}`,
+      created_at: createdAt,
+      author: {
+        id: attribs["author-id"],
+        name: attribs["author"],
+        avatar: attribs["icon"],
+        url: `https://www.reddit.com/user/${attribs["author"]}`
+      },
+      content: {
+        domain: attribs["domain"],
+        url: attribs["content-href"],
+        image: img ? img.attribs["src"] : null
+      }
+    })
+  });
+
+  return postList;
 }
