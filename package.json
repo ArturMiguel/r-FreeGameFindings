@@ -2,9 +2,15 @@
   "name": "reddit-scraper",
   "version": "1.0.0",
   "description": "Scraper that collects free games posts published on Reddit and sends them to Discord",
-  "main": "./src/index.js",
+  "main": "index.js",
+  "engines": {
+    "node": "16"
+  },
   "scripts": {
-    "start": "node ."
+    "build": "tsc",
+    "dev": "ts-node-dev --respawn --transpile-only --clear ./src/index.ts",
+    "prestart": "npm run build",
+    "start": "node dist/index.js"
   },
   "keywords": [
     "webscraping",
@@ -18,14 +24,19 @@
   },
   "author": "Artur Miguel",
   "license": "MIT",
-  "dependencies": {
-    "axios": "^0.19.2",
-    "cheerio": "^1.0.0-rc.3",
-    "dotenv": "^8.2.0",
-    "moment-timezone": "^0.5.28"
-  },
   "bugs": {
     "url": "https://github.com/ArturMiguel/r-FreeGameFindings/issues"
   },
-  "homepage": "https://github.com/ArturMiguel/r-FreeGameFindingsr#readme"
+  "homepage": "https://github.com/ArturMiguel/r-FreeGameFindings#readme",
+  "dependencies": {
+    "axios": "^1.7.9",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "moment-timezone": "^0.5.46"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.17",
+    "ts-node-dev": "^2.0.0"
+  }
 }
