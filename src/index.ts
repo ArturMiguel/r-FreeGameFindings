@@ -6,7 +6,7 @@ import "./server";
 
 let lastDate = null;
 
-setInterval(async () => {
+async function exec() {
   try {
     const redditService = new RedditService();
     const discordService = new DiscordService();
@@ -27,17 +27,17 @@ setInterval(async () => {
       
       const payload = {
         id: data.id,
-        description: `Source: [${data.subreddit}](https://www.reddit.com${data.permalink})`,
+        description: `Source ${data.over_18 == true ? "(+18)" : ""}: [${data.subreddit}](https://www.reddit.com${data.permalink})`,
         title: data.title,
         url: data.url,
         footer: {
-          icon_url: authorInfo.data.snoovatar_img,
+          icon_url: authorInfo.data.snoovatar_img || "https://styles.redditmedia.com/t5_30mv3/styles/communityIcon_xnoh6m7g9qh71.png",
           text: `${data.author} • ${momentTz(new Date(data.created_utc * 1000)).tz("America/Sao_Paulo").format("DD/MM/YYYY [às] HH:mm:ss")}`
-        },
+        }
       }
-      if (data.thumbnail.includes("http")) { // "default", "nfsw" (over_18 = true), ...
-        payload["thumbnail"] = {
-          url: data.thumbnail
+      if (data.preview) {
+        payload["image"] = {
+          url: data.preview.images[0].source.url
         }
       }
       return payload;
@@ -53,4 +53,8 @@ setInterval(async () => {
   } catch (error) {
     console.log(error.message);
   }
-}, parseInt(process.env.INTERVAL));
+}
+
+exec().finally(() => {
+  setInterval(exec, parseInt(process.env.INTERVAL));
+});

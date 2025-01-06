@@ -10,7 +10,7 @@
 The application runs periodically and is divided into three steps:
 
 1) Authenticates with the [Reddit API](https://github.com/reddit-archive/reddit/wiki/API) and fetches posts from the subreddit [FreeGameFindings](https://www.reddit.com/r/FreeGameFindings/new/).
-2) Processes the returned posts and creates the [Discord embeds](https://discordjs.guide/popular-topics/embeds.html#embed-preview).
+2) Processes the returned posts and creates the [Discord embeds](https://discord.com/developers/docs/resources/webhook#execute-webhook-jsonform-params).
 3) Sends the embeds using the [Discord webhook](https://discord.com/developers/docs/resources/webhook).
 
 ## 👷 How to install and run:

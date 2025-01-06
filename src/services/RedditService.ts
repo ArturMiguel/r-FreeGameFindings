@@ -36,7 +36,7 @@ export class RedditService {
         }
       }
 
-      const response = await axios.get("https://oauth.reddit.com/r/FreeGameFindings/new.json?limit=10", options);
+      const response = await axios.get("https://oauth.reddit.com/r/FreeGameFindings/new.json?limit=10&raw_json=1", options);
       return response.data;
     } catch (error) {
       throw new Error(error.response ? error.response.data : error.message);
