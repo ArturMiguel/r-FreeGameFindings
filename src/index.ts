@@ -15,7 +15,7 @@ async function exec() {
     let postList = (await redditService.getPosts(authorization)).data.children;
 
     if (lastDate) {
-      postList = postList.filter(post => momentTz(new Date(post.created_utc * 1000)).isAfter(lastDate));
+      postList = postList.filter(post => momentTz(new Date(post.data.created_utc * 1000)).isAfter(lastDate));
     }
 
     if (!postList.length) {
