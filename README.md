@@ -5,7 +5,7 @@
 
 <img src='./assets/preview.png' alt='image not found'>
 
-## 📚 How does it work
+## How does it work
 
 The application runs periodically and is divided into three steps:
 
@@ -13,7 +13,7 @@ The application runs periodically and is divided into three steps:
 2) Processes the returned posts and creates the [Discord embeds](https://discord.com/developers/docs/resources/webhook#execute-webhook-jsonform-params).
 3) Sends the embeds using the [Discord webhook](https://discord.com/developers/docs/resources/webhook).
 
-## 👷 How to install and run:
+## How to install and run:
 
 #### Pre-requisites
 
@@ -25,17 +25,16 @@ The application runs periodically and is divided into three steps:
 
 - Install the dependencies: `npm ci`
 - Rename `.env.template` to `.env` and put your credentials:
-  - INTERVAL=Interval in milliseconds to fetch posts from Reddit.
   - DISCORD_WEBHOOK=Discord webhook URL
   - REDDIT_CLIENT_ID=Reddit client ID
   - REDDIT_CLIENT_SECRET=Reddit client secret
   - REDDIT_USER_AGENT=Application identifier. Follow the [Reddit rules](https://github.com/reddit-archive/reddit/wiki/API#rules). 
 - Start the application: `npm run start`
 
-## ⚠️ Disclaimer
+## Disclaimer
 
 This is a repository for personal use, all content collected from Reddit is public and accessed by any user, i just automated this process.
 
-## 📜 License
+## License
 
 [MIT](LICENSE)

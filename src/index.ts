@@ -2,6 +2,7 @@ import "dotenv/config";
 import momentTz from "moment-timezone";
 import { RedditService } from "./services/RedditService";
 import { DiscordService } from "./services/DiscordService";
+import nodeCron from "node-cron";
 import "./server";
 
 let lastDate = null;
@@ -17,6 +18,8 @@ async function exec() {
     if (lastDate) {
       postList = postList.filter(post => momentTz(new Date(post.data.created_utc * 1000)).isAfter(lastDate));
     }
+
+    console.log(`${postList.length} new post(s)`);
 
     if (!postList.length) {
       return;
@@ -56,5 +59,7 @@ async function exec() {
 }
 
 exec().finally(() => {
-  setInterval(exec, parseInt(process.env.INTERVAL));
+  nodeCron.schedule("0 */2 * * *", () => {
+    exec();
+  })
 });
