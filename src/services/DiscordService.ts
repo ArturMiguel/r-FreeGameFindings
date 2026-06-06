@@ -4,7 +4,7 @@ export class DiscordService {
   private webhookURL = process.env.DISCORD_WEBHOOK;
   private maxEmbedsPerRequest = 10;
 
-  async sendWebhook(data: any) {
+  public async sendWebhook(data: any) {
     try {
       const embeds: any[] = data.embeds || [];
 

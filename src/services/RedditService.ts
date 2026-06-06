@@ -11,7 +11,7 @@ export class RedditService {
   private userAgent = process.env.REDDIT_USER_AGENT;
   private defaultAvatar = "https://styles.redditmedia.com/t5_30mv3/styles/communityIcon_xnoh6m7g9qh71.png";
 
-  async authorize(): Promise<string | null> {
+  public async authorize(): Promise<string | null> {
     if (this.apiType == RedditApiType.RSS) {
       return null;
     }
@@ -37,14 +37,14 @@ export class RedditService {
     }
   }
 
-  async getPosts(token?: string): Promise<RedditPost[]> {
+  public async getPosts(token?: string): Promise<RedditPost[]> {
     if (this.apiType == RedditApiType.RSS) {
       return this.getPostsFromRSS();
     }
     return this.getPostsFromOAuth(token);
   }
 
-  async getUser(username: string, token?: string): Promise<RedditAuthor> {
+  public async getUser(username: string, token?: string): Promise<RedditAuthor> {
     if (this.apiType == RedditApiType.RSS) {
       return this.buildAuthor(username);
     }
