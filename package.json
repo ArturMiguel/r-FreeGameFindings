@@ -4,7 +4,7 @@
   "description": "Scraper that collects free games posts published on Reddit and sends them to Discord",
   "main": "index.js",
   "engines": {
-    "node": "16"
+    "node": "24"
   },
   "scripts": {
     "build": "tsc",
@@ -29,14 +29,17 @@
   },
   "homepage": "https://github.com/ArturMiguel/r-FreeGameFindings#readme",
   "dependencies": {
-    "axios": "^1.7.9",
-    "cors": "^2.8.5",
-    "dotenv": "^16.4.7",
-    "express": "^4.21.2",
-    "moment-timezone": "^0.5.46"
+    "axios": "^1.17.0",
+    "cors": "^2.8.6",
+    "dotenv": "^16.6.1",
+    "express": "^4.22.2",
+    "fast-xml-parser": "^5.8.0",
+    "moment-timezone": "^0.5.48",
+    "node-cron": "^3.0.3"
   },
   "devDependencies": {
-    "@types/cors": "^2.8.17",
+    "@types/cors": "^2.8.19",
+    "@types/node-cron": "^3.0.11",
     "ts-node-dev": "^2.0.0"
   }
 }
