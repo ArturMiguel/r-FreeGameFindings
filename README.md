@@ -7,7 +7,7 @@
 
 ## How it works
 
-The application runs on startup and then every minute via cron, executing the following steps:
+The application runs on startup and then on a configurable cron schedule (`INTERVAL`), executing the following steps:
 
 1. Fetches the latest posts from the subreddit [r/FreeGameFindings](https://www.reddit.com/r/FreeGameFindings/new/) using one of two data sources:
    - **OAuth API**: Authenticated access via [Reddit API](https://github.com/reddit-archive/reddit/wiki/API) with client credentials. Provides full post data including author avatars and NSFW flags.
@@ -46,6 +46,7 @@ cp .env.template .env
 
 | Variable | Required | Description |
 |---|---|---|
+| `INTERVAL` | No | Cron expression for the execution schedule. Defaults to `0 * * * *` (every hour) |
 | `DISCORD_WEBHOOK` | Yes | Discord webhook URL |
 | `REDDIT_API_TYPE` | Yes | `RSS` for public access (no credentials needed) or `OAUTH` for authenticated access |
 | `REDDIT_CLIENT_ID` | Only for OAUTH | Reddit application client ID |

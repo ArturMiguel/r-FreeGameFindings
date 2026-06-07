@@ -35,6 +35,8 @@ async function exec() {
 
     lastDate = new Date(postList[0].created_utc * 1000);
 
+    postList = postList.filter(post => post.url.includes("858710"));
+
     // Send to Discord
     try {
       const embedList = await Promise.all(postList.map(async (post) => {
@@ -70,14 +72,47 @@ async function exec() {
     // Send to Steam
     const steamPostList = postList.filter(p => p.url.includes("https://store.steampowered.com/app/"));
 
-    try {
-      for await (let post of steamPostList) {
-        const appId = (post.url.match(/\/app\/(\d+)/)?.[1] || 0).toString();
-        await steamService.sendStatus(`Available for free. Claim it now and it's yours to keep.\n\n${post.url}`, appId);
-        await new Promise(resolve => setTimeout(() => resolve(1), 30000));
+    if (steamPostList.length) {
+      try {
+        const steamAppIds = steamPostList.map(p => (p.url.match(/\/app\/(\d+)/)?.[1] || 0).toString());
+        const steamDetails = await steamService.getAppDetails(steamAppIds);
+
+        for await (let post of steamPostList) {
+          const appId = (post.url.match(/\/app\/(\d+)/)?.[1] || 0).toString();
+          const appDetails = steamDetails.get(appId);
+
+          let statusText = `🎁 Available for free. Claim it now and it's yours to keep.\n\n${post.url}`;
+
+          if (appDetails) {
+            const lines: string[] = [];
+
+            if (appDetails.genres.length) {
+              lines.push(`🎮 Genres: ${appDetails.genres.map(g => g.description).join(", ")}\n`);
+            }
+            if (appDetails.categories.length) {
+              lines.push(`🏷️ Categories: ${appDetails.categories.map(c => c.description).join(", ")}\n`);
+            }
+            if (appDetails.achievements.length && appDetails.achievements[0].total > 0) {
+              lines.push(`🏆 Achievements: ${appDetails.achievements[0].total}\n`);
+            }
+            if (appDetails.release_date.date) {
+              lines.push(`📅 Release date: ${appDetails.release_date.date}\n`);
+            }
+            if (appDetails.publishers.length) {
+              lines.push(`🏢 Publisher: ${appDetails.publishers.join(", ")}\n`);
+            }
+
+            if (lines.length) {
+              statusText += `\n\n${lines.join("\n")}`;
+            }
+          }
+
+          await steamService.sendStatus(statusText, appId);
+          await new Promise(resolve => setTimeout(() => resolve(1), 30000));
+        }
+      } catch (error) {
+        console.log(`[Steam] Failed to send ${steamPostList.length} post(s): ${error.message}`);
       }
-    } catch (error) {
-      console.log(`[Steam] Failed to send ${steamPostList.length} post(s): ${error.message}`);
     }
   } catch (error) {
     console.log(error.message);
@@ -87,7 +122,8 @@ async function exec() {
 }
 
 exec().finally(() => {
-  nodeCron.schedule("* * * * *", () => {
+  const interval = process.env.INTERVAL || "0 * * * *";
+  nodeCron.schedule(interval, () => {
     exec();
   })
 });
