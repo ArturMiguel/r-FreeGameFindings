@@ -27,15 +27,13 @@ async function exec() {
       postList = postList.filter(post => momentTz(new Date(post.created_utc * 1000)).isAfter(lastDate));
     }
 
-    console.log(`${postList.length} new post(s)`);
+    console.log(`[Scrapper] ${postList.length} new post(s)`);
 
     if (!postList.length) {
       return;
     }
 
     lastDate = new Date(postList[0].created_utc * 1000);
-
-    postList = postList.filter(post => post.url.includes("858710"));
 
     // Send to Discord
     try {
@@ -71,43 +69,44 @@ async function exec() {
 
     // Send to Steam
     const steamPostList = postList.filter(p => p.url.includes("https://store.steampowered.com/app/"));
+    console.log(`[Scrapper] ${steamPostList.length} Steam post(s)`);
 
     if (steamPostList.length) {
       try {
-        const steamAppIds = steamPostList.map(p => (p.url.match(/\/app\/(\d+)/)?.[1] || 0).toString());
-        const steamDetails = await steamService.getAppDetails(steamAppIds);
-
         for await (let post of steamPostList) {
           const appId = (post.url.match(/\/app\/(\d+)/)?.[1] || 0).toString();
-          const appDetails = steamDetails.get(appId);
+          const appDetails = await steamService.getAppDetails(appId);
 
-          let statusText = `🎁 Available for free. Claim it now and it's yours to keep.\n\n${post.url}`;
+          console.log(`[Steam] ${appDetails.name}: discount ${appDetails?.price_overview?.discount_percent}`);
 
-          if (appDetails) {
+          if (appDetails?.price_overview?.discount_percent == 100) {
+
+            // User status
+            let statusText = `🎁 Free "${appDetails.name}". Claim it now and it's yours to keep.\n\n${post.url}`;
             const lines: string[] = [];
+            lines.push(`🎮 Genres: ${appDetails.genres.map(g => g.description).join(", ")}\n`);
+            lines.push(`🏷️ Categories: ${appDetails.categories.map(c => c.description).join(", ")}\n`);
+            lines.push(`🏆 Achievements: ${appDetails.achievements.total}\n`);
+            lines.push(`📅 Release date: ${appDetails.release_date.date}\n`);
+            lines.push(`🏢 Publisher: ${appDetails.publishers.join(", ")}\n`);
+            statusText += `\n\n${lines.join("\n")}`;
 
-            if (appDetails.genres.length) {
-              lines.push(`🎮 Genres: ${appDetails.genres.map(g => g.description).join(", ")}\n`);
-            }
-            if (appDetails.categories.length) {
-              lines.push(`🏷️ Categories: ${appDetails.categories.map(c => c.description).join(", ")}\n`);
-            }
-            if (appDetails.achievements.length && appDetails.achievements[0].total > 0) {
-              lines.push(`🏆 Achievements: ${appDetails.achievements[0].total}\n`);
-            }
-            if (appDetails.release_date.date) {
-              lines.push(`📅 Release date: ${appDetails.release_date.date}\n`);
-            }
-            if (appDetails.publishers.length) {
-              lines.push(`🏢 Publisher: ${appDetails.publishers.join(", ")}\n`);
-            }
+            await steamService.createUserStatus(statusText, appId);
+            await new Promise(resolve => setTimeout(() => resolve(1), 30000));
+            
+            // Group announcement
+            let announcementBody = `🎁 Claim it now and it's yours to keep.\n\n${post.url}`;
+            const announcementLines: string[] = [];
+            announcementLines.push(`🎮 [b]Genres:[/b] ${appDetails.genres.map(g => g.description).join(", ")}\n`);
+            announcementLines.push(`🏷️ [b]Categories:[/b] ${appDetails.categories.map(c => c.description).join(", ")}\n`);
+            announcementLines.push(`🏆 [b]Achievements:[/b] ${appDetails.achievements.total}\n`);
+            announcementLines.push(`📅 [b]Release date:[/b] ${appDetails.release_date.date}\n`);
+            announcementLines.push(`🏢 [b]Publisher:[/b] ${appDetails.publishers.join(", ")}\n`);
+            announcementBody += `\n\n${announcementLines.join("\n")}`;
 
-            if (lines.length) {
-              statusText += `\n\n${lines.join("\n")}`;
-            }
+            await steamService.createGroupAnnouncement(`Free "${appDetails.name}"`, announcementBody);
           }
 
-          await steamService.sendStatus(statusText, appId);
           await new Promise(resolve => setTimeout(() => resolve(1), 30000));
         }
       } catch (error) {

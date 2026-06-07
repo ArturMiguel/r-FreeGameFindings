@@ -1,9 +1,7 @@
 <div align="center">
   <h1>r/FreeGameFindings</h1>
-  <p>Application that collects free game posts from <a href="https://www.reddit.com/r/FreeGameFindings/new/">r/FreeGameFindings</a> on Reddit and sends them to a Discord channel and to the Steam activity feed.</p>
+  <p>Application that collects free game posts from <a href="https://www.reddit.com/r/FreeGameFindings/new/">r/FreeGameFindings</a> on Reddit and sends them to a Discord channel, to the Steam activity feed and as a Steam group announcement.</p>
 </div>
-
-<img src="./assets/preview.png" alt="Discord embed preview">
 
 ## How it works
 
@@ -17,7 +15,7 @@ The application runs on startup and then on a configurable cron schedule (`INTER
 
 <img src="./assets/discord.png" alt="Discord message example" width="600">
 
-3. Among those posts, filters the ones linking to the [Steam Store](https://store.steampowered.com/) and publishes each one as a status update on the Steam activity feed.
+3. Among those posts, filters the ones linking to the [Steam Store](https://store.steampowered.com/) with a 100% discount, publishes each one as a user status update and a group announcement on Steam.
 
 <img src="./assets/steam.png" alt="Steam message example" width="600">
 
@@ -55,6 +53,7 @@ cp .env.template .env
 | `STEAM_SESSIONID` | Yes | `sessionid` cookie value from an authenticated Steam session |
 | `STEAM_LOGIN_SECURE` | Yes | `steamLoginSecure` cookie value from an authenticated Steam session |
 | `STEAM_USER_ID` | Yes | Steam profile numeric ID (SteamID64) |
+| `STEAM_GROUP_NAME` | Yes | Steam group name (URL group name) |
 
 ## Running
 
